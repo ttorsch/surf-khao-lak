@@ -14,15 +14,16 @@ export default function Home() {
       <Hero />
       <Slider />
 
-      <section id="cours" className="mx-auto max-w-5xl scroll-mt-4 px-5 py-14 sm:py-20">
-        <h2 className="font-display text-3xl text-ocean-900 sm:text-4xl">Nos cours</h2>
-        <p className="mt-2 max-w-xl text-ocean-800/75">
-          Trois formules, du premier essai au stage complet. Tout le matériel est fourni.
+      <section id="cours" className="mx-auto max-w-5xl scroll-mt-4 px-5.5 pt-10 pb-2">
+        <h2 className="font-display text-[28px] leading-[1.1] text-navy sm:text-4xl">Nos cours</h2>
+        <p className="mt-2 max-w-xl text-[15px] leading-[1.55] text-navy/72 text-pretty">
+          Quatre formules, du cours collectif au cours particulier. Moniteur dans l&apos;eau avec
+          vous à chaque séance.
         </p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5.5 grid gap-5 sm:grid-cols-2">
           {classes.map((surfClass, i) => (
-            <Reveal key={surfClass.slug} delay={i * 0.08}>
+            <Reveal key={surfClass.slug} delay={i * 0.08} className="h-full">
               <ClassCard surfClass={surfClass} />
             </Reveal>
           ))}

@@ -2,14 +2,13 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 
 const styles = {
-  primary:
-    "bg-sunset-500 text-white shadow-lg shadow-sunset-600/25 hover:bg-sunset-600 active:bg-sunset-600",
+  primary: "bg-orange text-cream shadow-orange hover:bg-orange-dark active:bg-orange-dark",
   secondary:
-    "bg-white text-ocean-800 ring-1 ring-ocean-800/15 hover:bg-ocean-50 active:bg-ocean-100",
-  ghost: "bg-white/15 text-white ring-1 ring-white/40 hover:bg-white/25 active:bg-white/30",
+    "border border-line-strong bg-transparent text-navy hover:bg-sand-100 active:bg-sand-100",
+  ghost: "border border-cream/50 bg-cream/10 text-cream hover:bg-cream/20 active:bg-cream/25",
 };
 
-/** Bouton d'action. Hauteur minimale 44 px pour la cible tactile. */
+/** Bouton pilule de la maquette. Hauteur 50 px : cible tactile confortable. */
 export default function CtaButton({
   href,
   children,
@@ -24,7 +23,7 @@ export default function CtaButton({
   return (
     <Link
       href={href}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-base font-semibold transition-colors ${styles[variant]} ${className}`}
+      className={`inline-flex h-[50px] items-center justify-center gap-2 rounded-full px-6 text-[15px] font-semibold transition-colors ${styles[variant]} ${className}`}
     >
       {children}
     </Link>

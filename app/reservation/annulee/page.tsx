@@ -18,8 +18,8 @@ export default async function CancelledPage({ searchParams }: Props) {
 
   return (
     <main className="mx-auto max-w-xl px-5 py-16 text-center">
-      <h1 className="font-display text-3xl text-ocean-900">Paiement interrompu</h1>
-      <p className="mt-3 text-ocean-800/80">
+      <h1 className="font-display text-3xl text-navy">Paiement interrompu</h1>
+      <p className="mt-3 text-navy/80">
         Aucun montant n&apos;a été débité. Votre place n&apos;est pas réservée, mais vous pouvez
         reprendre là où vous en étiez.
       </p>
@@ -33,20 +33,20 @@ export default async function CancelledPage({ searchParams }: Props) {
         </CtaButton>
       </div>
 
-      <p className="mt-8 text-ocean-800/75">
+      <p className="mt-8 text-navy/72">
         Un doute, une question sur les dates ?{" "}
         <a
-          href={whatsappUrl("Bonjour ! J'ai une question avant de réserver.")}
+          href={whatsappUrl()}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-semibold text-ocean-600 underline"
+          className="font-semibold text-blue underline"
         >
           Parlons-en sur WhatsApp
         </a>
         .
       </p>
 
-      <Link href="/" className="mt-8 inline-flex min-h-11 items-center text-ocean-800 underline">
+      <Link href="/" className="mt-8 inline-flex min-h-11 items-center text-navy underline">
         Revenir à l&apos;accueil
       </Link>
     </main>

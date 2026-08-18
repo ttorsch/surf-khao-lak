@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getClass } from "@/lib/classes";
+import { billableQuantity, getClass } from "@/lib/classes";
 import { toStripeAmount } from "@/lib/format";
 import { getStripe, siteUrl } from "@/lib/stripe";
 
@@ -50,9 +50,19 @@ export async function POST(request: Request) {
   if (!isDate(date)) {
     return NextResponse.json({ error: "Merci de choisir une date valide." }, { status: 400 });
   }
-  if (!Number.isInteger(participants) || participants < 1 || participants > 8) {
+  // Les bornes viennent du catalogue, jamais de la requête.
+  if (
+    !Number.isInteger(participants) ||
+    participants < surfClass.minParticipants ||
+    participants > surfClass.maxParticipants
+  ) {
     return NextResponse.json(
-      { error: "Le nombre de participants doit être compris entre 1 et 8." },
+      {
+        error:
+          surfClass.minParticipants === surfClass.maxParticipants
+            ? `Cette formule se réserve pour ${surfClass.maxParticipants} participants.`
+            : `Le nombre de participants doit être compris entre ${surfClass.minParticipants} et ${surfClass.maxParticipants}.`,
+      },
       { status: 400 },
     );
   }
@@ -65,7 +75,8 @@ export async function POST(request: Request) {
       customer_email: email,
       line_items: [
         {
-          quantity: participants,
+          // Un tarif « forfait » / « groupe » se vend en un seul exemplaire.
+          quantity: billableQuantity(surfClass, participants),
           price_data: {
             currency: "thb",
             unit_amount: toStripeAmount(surfClass.priceThb),

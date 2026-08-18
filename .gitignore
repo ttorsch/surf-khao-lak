@@ -43,3 +43,6 @@ next-env.d.ts
 # Projet
 .tmp/
 .env.local
+
+# Photos originales (haute résolution) — jamais commitées, jamais servies
+photos-sources/

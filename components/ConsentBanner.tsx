@@ -51,29 +51,29 @@ export default function ConsentBanner() {
         <div
           role="dialog"
           aria-label="Consentement aux cookies de mesure"
-          className="fixed inset-x-0 bottom-0 z-50 border-t border-ocean-900/10 bg-white px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-2xl"
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center p-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))]"
         >
-          <div className="mx-auto flex max-w-3xl flex-col gap-2.5 sm:flex-row sm:items-center">
-            <p className="flex-1 text-xs leading-snug text-ocean-800">
+          <div className="pointer-events-auto flex w-full max-w-[406px] flex-col gap-3.5 rounded-banner bg-surface px-5 pt-4.5 pb-4 shadow-banner sm:max-w-3xl sm:flex-row sm:items-center">
+            <p className="flex-1 text-[13px] leading-[1.5] text-navy/78 text-pretty">
               Nous utilisons des cookies de mesure d&apos;audience et de publicité pour comprendre
               d&apos;où viennent nos visiteurs. Ils ne sont déposés qu&apos;avec votre accord.{" "}
-              <Link href="/mentions-legales" className="underline">
+              <Link href="/mentions-legales" className="text-orange underline">
                 En savoir plus
               </Link>
               .
             </p>
-            <div className="flex shrink-0 gap-2">
+            <div className="flex shrink-0 gap-2.5">
               <button
                 type="button"
                 onClick={() => decide("accepte")}
-                className="min-h-11 flex-1 rounded-full bg-ocean-600 px-5 text-sm font-semibold text-white transition-colors hover:bg-ocean-800 sm:flex-none"
+                className="h-11 flex-1 rounded-full bg-orange px-5 text-sm font-semibold text-cream transition-colors hover:bg-orange-dark sm:flex-none"
               >
                 Accepter
               </button>
               <button
                 type="button"
                 onClick={() => decide("refuse")}
-                className="min-h-11 flex-1 rounded-full px-5 text-sm font-semibold text-ocean-800 ring-1 ring-ocean-900/15 transition-colors hover:bg-ocean-50 sm:flex-none"
+                className="h-11 flex-1 rounded-full border border-line-strong px-5 text-sm font-medium text-navy transition-colors hover:bg-sand-100 sm:flex-none"
               >
                 Refuser
               </button>

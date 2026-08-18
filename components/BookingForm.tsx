@@ -12,11 +12,16 @@ const today = () => new Date().toISOString().slice(0, 10);
  * détails de la réservation. Le serveur retrouve le tarif réel.
  */
 export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
-  const [participants, setParticipants] = useState(1);
+  const { minParticipants: min, maxParticipants: max } = surfClass;
+  const fixedSize = min === max;
+
+  const [participants, setParticipants] = useState(min);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const maxParticipants = surfClass.groupSize === 1 ? 1 : surfClass.groupSize;
+  /** Un tarif « forfait » ou « groupe » est global, pas multiplié. */
+  const total =
+    surfClass.priceUnit === "personne" ? surfClass.priceThb * participants : surfClass.priceThb;
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,7 +39,7 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
           name: data.get("name"),
           email: data.get("email"),
           date: data.get("date"),
-          participants: Number(data.get("participants")),
+          participants,
           level: data.get("level"),
           notes: data.get("notes"),
         }),
@@ -50,58 +55,64 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
   }
 
   const field =
-    "mt-1.5 block w-full min-h-12 rounded-xl border-0 bg-white px-4 text-ocean-900 ring-1 ring-ocean-900/15 focus:ring-2 focus:ring-ocean-500 focus:outline-none";
+    "mt-1.5 block h-12 w-full rounded-soft border border-line-strong bg-surface px-4 text-navy focus:border-orange focus:outline-none";
 
   return (
     <form onSubmit={onSubmit} className="space-y-5">
       <div>
-        <label htmlFor="name" className="font-medium text-ocean-900">
+        <label htmlFor="name" className="text-[15px] font-semibold text-navy">
           Votre nom
         </label>
         <input id="name" name="name" type="text" required minLength={2} autoComplete="name" className={field} />
       </div>
 
       <div>
-        <label htmlFor="email" className="font-medium text-ocean-900">
+        <label htmlFor="email" className="text-[15px] font-semibold text-navy">
           Votre e-mail
         </label>
         <input id="email" name="email" type="email" required autoComplete="email" className={field} />
-        <p className="mt-1.5 text-sm text-ocean-800/65">
+        <p className="mt-1.5 text-[13px] text-navy/65">
           C&apos;est là que vous recevrez votre confirmation.
         </p>
       </div>
 
       <div>
-        <label htmlFor="date" className="font-medium text-ocean-900">
+        <label htmlFor="date" className="text-[15px] font-semibold text-navy">
           Date souhaitée
         </label>
         <input id="date" name="date" type="date" required min={today()} className={field} />
-        <p className="mt-1.5 text-sm text-ocean-800/65">
+        <p className="mt-1.5 text-[13px] text-navy/65">
           Nous confirmons l&apos;horaire par message la veille, selon les marées.
         </p>
       </div>
 
       <div>
-        <label htmlFor="participants" className="font-medium text-ocean-900">
+        <label htmlFor="participants" className="text-[15px] font-semibold text-navy">
           Nombre de participants
         </label>
-        <select
-          id="participants"
-          name="participants"
-          className={field}
-          value={participants}
-          onChange={(e) => setParticipants(Number(e.target.value))}
-        >
-          {Array.from({ length: maxParticipants }, (_, i) => i + 1).map((n) => (
-            <option key={n} value={n}>
-              {n} {n > 1 ? "personnes" : "personne"}
-            </option>
-          ))}
-        </select>
+        {fixedSize ? (
+          <p className={`${field} flex items-center text-navy/70`}>
+            {max} {max > 1 ? "personnes" : "personne"} — imposé par la formule
+          </p>
+        ) : (
+          <select
+            id="participants"
+            name="participants"
+            className={field}
+            value={participants}
+            onChange={(e) => setParticipants(Number(e.target.value))}
+          >
+            {Array.from({ length: max - min + 1 }, (_, i) => min + i).map((n) => (
+              <option key={n} value={n}>
+                {n} {n > 1 ? "personnes" : "personne"}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
 
       <div>
-        <label htmlFor="level" className="font-medium text-ocean-900">
+        <label htmlFor="level" className="text-[15px] font-semibold text-navy">
           Votre niveau
         </label>
         <select id="level" name="level" className={field} defaultValue="Jamais surfé">
@@ -112,25 +123,33 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
       </div>
 
       <div>
-        <label htmlFor="notes" className="font-medium text-ocean-900">
-          Quelque chose à nous signaler ? <span className="font-normal text-ocean-800/60">(facultatif)</span>
+        <label htmlFor="notes" className="text-[15px] font-semibold text-navy">
+          Quelque chose à nous signaler ?{" "}
+          <span className="font-normal text-navy/60">(facultatif)</span>
         </label>
-        <textarea id="notes" name="notes" rows={3} maxLength={400} className={`${field} py-3`} />
+        <textarea
+          id="notes"
+          name="notes"
+          rows={3}
+          maxLength={400}
+          className="mt-1.5 block w-full rounded-soft border border-line-strong bg-surface px-4 py-3 text-navy focus:border-orange focus:outline-none"
+        />
       </div>
 
-      <div className="rounded-2xl bg-sand-100 p-4">
-        <p className="flex items-baseline justify-between text-ocean-900">
+      <div className="rounded-soft bg-sand-100 p-4">
+        <p className="flex items-baseline justify-between gap-3 text-navy">
           <span>
-            {surfClass.name} × {participants}
+            {surfClass.name}
+            {surfClass.priceUnit === "personne" && ` × ${participants}`}
           </span>
-          <span className="font-display text-2xl">
-            {formatPrice(surfClass.priceThb * participants)}
+          <span className="font-display text-2xl tabular-nums text-blue">
+            {formatPrice(total)}
           </span>
         </p>
       </div>
 
       {error && (
-        <p role="alert" className="rounded-xl bg-red-50 p-3 text-red-800 ring-1 ring-red-200">
+        <p role="alert" className="rounded-soft bg-red-50 p-3 text-red-800">
           {error}
         </p>
       )}
@@ -138,13 +157,13 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
       <button
         type="submit"
         disabled={pending}
-        className="flex min-h-13 w-full items-center justify-center gap-2 rounded-full bg-sunset-500 px-6 text-base font-semibold text-white shadow-lg shadow-sunset-600/25 transition-colors hover:bg-sunset-600 disabled:opacity-70"
+        className="flex h-[52px] w-full items-center justify-center gap-2 rounded-full bg-orange px-6 text-[15px] font-semibold text-cream shadow-orange transition-colors hover:bg-orange-dark disabled:opacity-70"
       >
         {pending && <Loader2 className="size-5 animate-spin" aria-hidden />}
         {pending ? "Redirection vers le paiement…" : "Payer et réserver"}
       </button>
 
-      <p className="text-center text-sm text-ocean-800/65">
+      <p className="text-center text-[13px] text-navy/65">
         Paiement sécurisé par Stripe. Aucune donnée bancaire ne transite par ce site.
       </p>
     </form>

@@ -3,19 +3,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { slides } from "@/lib/slides";
 import PlaceholderImage from "./PlaceholderImage";
 
 /**
  * Le bloc « séduction ». Il vend la sensation, pas le produit.
  * Défilement automatique, gestes tactiles, pas d'interaction dépendant du survol.
+ *
+ * Une seule photo est montée à la fois : on ne télécharge que ce qui est vu.
+ * Le flou de chargement des imports statiques couvre le temps de fetch.
  */
-const slides = [
-  { label: "plage au lever du soleil", alt: "La plage de Khao Lak au lever du soleil" },
-  { label: "élève debout sur sa planche", alt: "Une élève debout sur sa planche, souriante" },
-  { label: "groupe sur le sable", alt: "Un petit groupe pendant l'échauffement sur le sable" },
-  { label: "coucher de soleil dans l'eau", alt: "Des surfeurs dans l'eau au coucher du soleil" },
-];
-
 export default function Slider() {
   const [index, setIndex] = useState(0);
 
@@ -28,17 +25,19 @@ export default function Slider() {
     return () => clearInterval(timer);
   }, [go]);
 
+  const slide = slides[index];
+
   return (
-    <section aria-label="Photos de l'école" className="bg-ocean-900 py-12 sm:py-16">
-      <div className="mx-auto max-w-5xl px-5">
-        <h2 className="font-display text-3xl text-white sm:text-4xl">
-          Ça se passe comme ça, chez nous
+    <section aria-label="Photos de l'école" className="mx-auto max-w-5xl px-5.5 pt-9 pb-2">
+      <div>
+        <h2 className="font-display text-[28px] leading-[1.1] text-navy sm:text-4xl">
+          Apprendre à surfer chez nous
         </h2>
-        <p className="mt-2 max-w-md text-white/70">
+        <p className="mt-2 max-w-md text-[15px] leading-[1.55] text-navy/72 text-pretty">
           De l&apos;eau à 29 °C, des vagues d&apos;apprentissage et personne pour vous presser.
         </p>
 
-        <div className="relative mt-6 aspect-4/5 overflow-hidden rounded-3xl sm:aspect-16/9">
+        <div className="relative mt-5 h-[260px] overflow-hidden rounded-card shadow-card sm:h-96">
           <AnimatePresence initial={false} mode="popLayout">
             <motion.div
               key={index}
@@ -56,8 +55,10 @@ export default function Slider() {
               }}
             >
               <PlaceholderImage
-                label={slides[index].label}
-                alt={slides[index].alt}
+                src={slide.src}
+                objectPosition={slide.objectPosition}
+                label={`photo ${index + 1}`}
+                alt={slide.alt}
                 sizes="(max-width: 640px) 100vw, 1024px"
               />
             </motion.div>
@@ -67,7 +68,7 @@ export default function Slider() {
             type="button"
             onClick={() => go(-1)}
             aria-label="Photo précédente"
-            className="absolute top-1/2 left-3 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm"
+            className="absolute top-1/2 left-3.5 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-sand-50/90 text-navy transition-colors hover:bg-orange hover:text-cream"
           >
             <ChevronLeft className="size-5" aria-hidden />
           </button>
@@ -75,15 +76,15 @@ export default function Slider() {
             type="button"
             onClick={() => go(1)}
             aria-label="Photo suivante"
-            className="absolute top-1/2 right-3 flex size-11 -translate-y-1/2 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-sm"
+            className="absolute top-1/2 right-3.5 flex size-10 -translate-y-1/2 items-center justify-center rounded-full bg-sand-50/90 text-navy transition-colors hover:bg-orange hover:text-cream"
           >
             <ChevronRight className="size-5" aria-hidden />
           </button>
 
-          <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
-            {slides.map((slide, i) => (
+          <div className="absolute inset-x-0 bottom-4 flex justify-center gap-[7px]">
+            {slides.map((s, i) => (
               <button
-                key={slide.label}
+                key={s.src.src}
                 type="button"
                 onClick={() => setIndex(i)}
                 aria-label={`Aller à la photo ${i + 1}`}
@@ -91,8 +92,8 @@ export default function Slider() {
                 className="flex h-11 w-6 items-center justify-center"
               >
                 <span
-                  className={`block h-1.5 rounded-full transition-all ${
-                    i === index ? "w-6 bg-white" : "w-1.5 bg-white/50"
+                  className={`block h-[7px] rounded-full transition-all duration-200 ${
+                    i === index ? "w-[22px] bg-orange" : "w-[7px] bg-sand-50/55"
                   }`}
                 />
               </button>

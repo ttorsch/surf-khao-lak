@@ -1,26 +1,29 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import Wave from "./Wave";
 
 export default function Footer() {
   return (
-    <footer className="mt-auto bg-ocean-900 px-5 py-10 text-white/70">
-      <div className="mx-auto flex max-w-5xl flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-display text-lg text-white">{site.name}</p>
-        <nav className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
-          <Link href="/conditions" className="hover:text-white">
+    <footer className="relative mt-auto bg-navy px-5.5 pt-11 pb-8 text-cream">
+      <Wave fill="var(--color-sand-50)" position="top" />
+
+      <div className="relative mx-auto max-w-5xl">
+        <p className="font-display mt-5.5 text-[19px] font-bold tracking-[-0.01em]">{site.name}</p>
+        <nav className="mt-4 flex flex-wrap gap-x-5.5 gap-y-2.5 text-sm">
+          <Link href="/conditions" className="text-cream/82 hover:text-cream">
             Conditions de vente
           </Link>
-          <Link href="/mentions-legales" className="hover:text-white">
+          <Link href="/mentions-legales" className="text-cream/82 hover:text-cream">
             Mentions légales
           </Link>
-          <a href={`mailto:${site.contact.email}`} className="hover:text-white">
+          <a href={`mailto:${site.contact.email}`} className="text-cream/82 hover:text-cream">
             Nous écrire
           </a>
         </nav>
+        <p className="mt-6 text-xs text-cream/50">
+          © {new Date().getFullYear()} {site.name} — {site.city}, {site.country}
+        </p>
       </div>
-      <p className="mx-auto mt-6 max-w-5xl text-xs text-white/45">
-        © {new Date().getFullYear()} {site.name} — {site.city}, {site.country}
-      </p>
     </footer>
   );
 }

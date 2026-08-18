@@ -1,65 +1,67 @@
-import { AtSign, Mail, MessageCircle, Phone } from "lucide-react";
+import { AtSign, ChevronRight, Mail, MessageCircle, Phone } from "lucide-react";
 import { site, whatsappUrl } from "@/lib/site";
 
 /**
  * Beaucoup de clients veulent parler à quelqu'un avant de payer.
- * Ce bloc est un vrai chemin de conversion, pas une politesse de bas de page.
+ * WhatsApp est mis en avant : c'est un vrai chemin de conversion.
  */
 export default function ContactBlock() {
-  const links = [
-    {
-      href: whatsappUrl("Bonjour ! J'aimerais des informations sur vos cours de surf."),
-      icon: MessageCircle,
-      label: "WhatsApp",
-      detail: "Réponse en général sous une heure",
-      primary: true,
-    },
-    { href: `tel:${site.contact.phone.replace(/\s/g, "")}`, icon: Phone, label: "Téléphone", detail: site.contact.phone },
-    { href: `mailto:${site.contact.email}`, icon: Mail, label: "E-mail", detail: site.contact.email },
+  const others = [
+    { href: `tel:${site.contact.phone.replace(/\s/g, "")}`, icon: Phone, label: "Téléphone", value: site.contact.phone },
+    { href: `mailto:${site.contact.email}`, icon: Mail, label: "E-mail", value: site.contact.email },
     {
       href: `https://instagram.com/${site.contact.instagram}`,
       icon: AtSign,
       label: "Instagram",
-      detail: `@${site.contact.instagram}`,
+      value: `@${site.contact.instagram}`,
     },
   ];
 
   return (
-    <section id="contact" className="bg-ocean-50 py-14 sm:py-20">
-      <div className="mx-auto max-w-5xl scroll-mt-4 px-5">
-        <h2 className="font-display text-3xl text-ocean-900 sm:text-4xl">
-          Une question avant de réserver ?
-        </h2>
-        <p className="mt-2 max-w-xl text-ocean-800/75">
-          Écrivez-nous, on répond en français. Niveau, météo, horaires, enfants : rien n&apos;est
-          bête à demander.
-        </p>
+    <section id="contact" className="mx-auto max-w-5xl scroll-mt-4 px-5.5 pt-11 pb-10">
+      <h2 className="font-display text-[28px] leading-[1.1] text-navy sm:text-4xl">
+        Une question avant de réserver ?
+      </h2>
+      <p className="mt-2 max-w-xl text-[15px] leading-[1.55] text-navy/72 text-pretty">
+        Écrivez-nous, on répond en français. Niveau, météo, horaires, enfants : rien n&apos;est
+        bête à demander.
+      </p>
 
-        <ul className="mt-6 grid gap-3 sm:grid-cols-2">
-          {links.map(({ href, icon: Icon, label, detail, primary }) => (
-            <li key={label}>
-              <a
-                href={href}
-                target={href.startsWith("http") ? "_blank" : undefined}
-                rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                className={`flex min-h-16 items-center gap-3.5 rounded-2xl p-4 transition-colors ${
-                  primary
-                    ? "bg-ocean-600 text-white hover:bg-ocean-800"
-                    : "bg-white text-ocean-900 ring-1 ring-ocean-900/8 hover:bg-white/70"
-                }`}
-              >
-                <Icon className="size-5 shrink-0" aria-hidden />
-                <span>
-                  <span className="block font-semibold">{label}</span>
-                  <span className={`block text-sm ${primary ? "text-white/80" : "text-ocean-800/70"}`}>
-                    {detail}
-                  </span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <a
+        href={whatsappUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 flex items-center gap-3.5 rounded-banner bg-orange px-5 py-4.5 text-cream shadow-orange transition-colors hover:bg-orange-dark"
+      >
+        <span className="flex size-[38px] flex-none items-center justify-center rounded-full bg-cream/20">
+          <MessageCircle className="size-[19px]" aria-hidden />
+        </span>
+        <span className="flex-1">
+          <span className="block text-base font-semibold">WhatsApp</span>
+          <span className="block text-[13px] opacity-85">Réponse en général sous une heure</span>
+        </span>
+        <ChevronRight className="size-[18px]" aria-hidden />
+      </a>
+
+      <ul className="mt-3 flex flex-col gap-2.5">
+        {others.map(({ href, icon: Icon, label, value }) => (
+          <li key={label}>
+            <a
+              href={href}
+              target={href.startsWith("http") ? "_blank" : undefined}
+              rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+              className="flex items-center gap-3.5 rounded-soft bg-surface px-4.5 py-3.5 text-navy shadow-soft transition-colors hover:bg-sand-100"
+            >
+              <Icon className="size-[18px] flex-none text-blue" aria-hidden />
+              <span className="flex-1">
+                <span className="block text-[13px] font-semibold">{label}</span>
+                <span className="block text-sm text-navy/70">{value}</span>
+              </span>
+              <ChevronRight className="size-4 text-navy/40" aria-hidden />
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

@@ -1,28 +1,42 @@
 @import "tailwindcss";
 
-/* Palette « vacances » : océan, sable, coucher de soleil.
-   Le site est volontairement en thème clair uniquement — c'est un produit
-   de vacances, pas une application. */
+/**
+ * Jetons issus de la maquette Claude Design « Surf Khao Lak ».
+ * Thème clair uniquement : c'est un produit de vacances, pas une application.
+ */
 @theme {
-  --color-ocean-50: #eef8ff;
-  --color-ocean-100: #d9efff;
-  --color-ocean-300: #7cc9f5;
-  --color-ocean-500: #199fdc;
-  --color-ocean-600: #067bb4;
-  --color-ocean-800: #0a4f74;
-  --color-ocean-900: #0b3a56;
+  /* Fonds */
+  --color-sand-50: #faf1e3; /* fond de page */
+  --color-sand-100: #f5eada; /* survol sur fond sable */
+  --color-sand-200: #f2e7d5; /* emplacements vides */
+  --color-surface: #fffcf6; /* cartes */
+  --color-cream: #fff8ee; /* texte sur aplat coloré */
 
-  --color-sand-50: #fdfaf4;
-  --color-sand-100: #f8f0e1;
-  --color-sand-200: #efe1c8;
-  --color-sand-700: #8a734b;
+  /* Traits */
+  --color-line: #efe3d0;
+  --color-line-strong: #dccfb9;
 
-  --color-sunset-400: #fb923c;
-  --color-sunset-500: #f97316;
-  --color-sunset-600: #e25c05;
+  /* Bleus */
+  --color-navy: #10315e;
+  --color-blue: #1e5cae;
+  --color-blue-mid: #3d74be;
+  --color-blue-soft: #8fb3e1;
+
+  /* Accent */
+  --color-orange: #ee7d1e;
+  --color-orange-dark: #d2660f;
+
+  --shadow-card: 0 8px 26px rgba(16, 49, 94, 0.1);
+  --shadow-soft: 0 6px 20px rgba(16, 49, 94, 0.08);
+  --shadow-orange: 0 8px 22px rgba(238, 125, 30, 0.32);
+  --shadow-banner: 0 16px 40px rgba(16, 49, 94, 0.24);
+
+  --radius-card: 26px;
+  --radius-soft: 22px;
+  --radius-banner: 24px;
 
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display), ui-serif, Georgia, serif;
+  --font-display: var(--font-display), ui-sans-serif, system-ui, sans-serif;
 }
 
 html {
@@ -31,7 +45,22 @@ html {
 
 body {
   background-color: var(--color-sand-50);
-  color: var(--color-ocean-900);
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Titres : Space Grotesk, serré, comme dans la maquette. */
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(238, 125, 30, 0.45);
 }
 
 @media (prefers-reduced-motion: reduce) {

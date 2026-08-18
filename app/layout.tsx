@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Fraunces } from "next/font/google";
+import { DM_Sans, Space_Grotesk } from "next/font/google";
 import { site } from "@/lib/site";
 import ConsentBanner from "@/components/ConsentBanner";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap" });
-const display = Fraunces({ variable: "--font-display", subsets: ["latin"], display: "swap" });
+const body = DM_Sans({ variable: "--font-body", subsets: ["latin"], display: "swap" });
+const display = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3002"),
@@ -24,12 +24,19 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#067bb4",
+  themeColor: "#10315e",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="fr" className={`${body.variable} ${display.variable} h-full antialiased`}>
+      <head>
+        {/* Sans JavaScript, les blocs animés doivent rester visibles :
+            une carte de cours invisible, c'est une réservation perdue. */}
+        <noscript>
+          <style>{`.js-reveal { opacity: 1 !important; transform: none !important; }`}</style>
+        </noscript>
+      </head>
       <body className="flex min-h-full flex-col font-sans">
         {children}
         <Footer />

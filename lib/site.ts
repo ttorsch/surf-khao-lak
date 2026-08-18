@@ -12,17 +12,19 @@ export const site = {
   // TODO — nom commercial définitif à confirmer
   name: "Surf Khao Lak",
   tagline: "Cours de surf à Khao Lak, Thaïlande",
-  // TODO — adresse et plage exactes
-  beach: "Nang Thong Beach",
+  beach: "Memories Beach",
   city: "Khao Lak",
   country: "Thaïlande",
-  address: "TODO — adresse complète de l'école",
-  // TODO — coordonnées réelles de la plage pour la carte
-  map: { lat: 8.6392, lng: 98.2451, zoom: 14 },
+  // Secteur confirmé par OpenStreetMap (หาดแหลมปะการัง, Khuk Khak, Takua Pa).
+  // TODO — adresse précise du point de rendez-vous (bar / surf house).
+  address: "Pakarang Beach, Khuk Khak, Takua Pa, Phang Nga",
+  // Repère sur la pointe de Pakarang. TODO — remplacer par le point GPS exact
+  // du rendez-vous dès que l'école le communique.
+  map: { lat: 8.729, lng: 98.2223, zoom: 15 },
   contact: {
-    // TODO — numéros et comptes réels
-    phone: "+66 00 000 0000",
-    whatsapp: "66000000000", // format international sans "+" pour wa.me
+    phone: "+66 63 737 4599",
+    whatsapp: "66637374599", // format international sans « + » pour wa.me
+    // TODO — adresse e-mail et compte Instagram réels
     email: "contact@example.com",
     instagram: "surfkhaolak",
   },
@@ -35,5 +37,9 @@ export const site = {
   },
 } as const;
 
-export const whatsappUrl = (message: string) =>
+/** Message pré-rempli de tous les boutons WhatsApp du site. */
+export const WHATSAPP_MESSAGE =
+  "Bonjour ! Puis-je avoir plus d'informations sur les cours de surf ?";
+
+export const whatsappUrl = (message: string = WHATSAPP_MESSAGE) =>
   `https://wa.me/${site.contact.whatsapp}?text=${encodeURIComponent(message)}`;

@@ -34,15 +34,15 @@ export default function StickyCta({
           animate={{ y: 0 }}
           exit={{ y: 80 }}
           transition={{ duration: 0.25, ease: "easeOut" }}
-          className="fixed inset-x-0 bottom-0 z-40 border-t border-ocean-900/10 bg-sand-50/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm"
+          className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-sand-50/95 px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] backdrop-blur-sm"
         >
           <div className="mx-auto flex max-w-3xl items-center gap-3">
             {price && (
-              <p className="font-display text-lg text-ocean-900 whitespace-nowrap">{price}</p>
+              <p className="font-display text-lg tabular-nums whitespace-nowrap text-blue">{price}</p>
             )}
             <Link
               href={href}
-              className="flex min-h-12 flex-1 items-center justify-center rounded-full bg-sunset-500 px-6 font-semibold text-white shadow-lg shadow-sunset-600/25 transition-colors hover:bg-sunset-600"
+              className="flex h-[50px] flex-1 items-center justify-center rounded-full bg-orange px-6 text-[15px] font-semibold text-cream shadow-orange transition-colors hover:bg-orange-dark"
             >
               {label}
             </Link>

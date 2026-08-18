@@ -10,11 +10,11 @@ export const metadata: Metadata = { title: "Mentions légales" };
 export default function LegalPage() {
   return (
     <main className="mx-auto max-w-2xl px-5 py-12">
-      <h1 className="font-display text-3xl text-ocean-900">Mentions légales</h1>
+      <h1 className="font-display text-3xl text-navy">Mentions légales</h1>
 
-      <div className="mt-8 space-y-8 text-ocean-800/85">
+      <div className="mt-8 space-y-8 text-navy/85">
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Éditeur du site</h2>
+          <h2 className="font-display text-xl text-navy">Éditeur du site</h2>
           <p className="mt-2">
             {site.legal.company}
             <br />
@@ -29,12 +29,12 @@ export default function LegalPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Hébergement</h2>
+          <h2 className="font-display text-xl text-navy">Hébergement</h2>
           <p className="mt-2">{site.legal.host}</p>
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Paiements</h2>
+          <h2 className="font-display text-xl text-navy">Paiements</h2>
           <p className="mt-2">
             Les paiements sont traités par Stripe. Aucune donnée de carte bancaire n&apos;est
             collectée ni stockée par {site.name}.
@@ -42,7 +42,7 @@ export default function LegalPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Données personnelles</h2>
+          <h2 className="font-display text-xl text-navy">Données personnelles</h2>
           <p className="mt-2">
             Les informations collectées lors d&apos;une réservation (nom, e-mail, date souhaitée,
             nombre de participants, niveau) servent uniquement à organiser votre séance et à vous
@@ -55,7 +55,7 @@ export default function LegalPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Cookies et mesure d&apos;audience</h2>
+          <h2 className="font-display text-xl text-navy">Cookies et mesure d&apos;audience</h2>
           <p className="mt-2">
             Ce site utilise des cookies de mesure d&apos;audience et de publicité (Meta Pixel) afin
             de comprendre l&apos;origine de ses visiteurs. Ces cookies ne sont déposés
@@ -66,7 +66,7 @@ export default function LegalPage() {
         </section>
 
         <section>
-          <h2 className="font-display text-xl text-ocean-900">Propriété intellectuelle</h2>
+          <h2 className="font-display text-xl text-navy">Propriété intellectuelle</h2>
           <p className="mt-2">
             Les textes et photographies présents sur ce site sont la propriété de{" "}
             {site.legal.company} et ne peuvent être reproduits sans autorisation.
