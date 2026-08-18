@@ -51,7 +51,7 @@ export default async function ClassPage({ params }: Params) {
       </div>
 
       <div className="mx-auto max-w-3xl px-5">
-        <header className="-mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ocean-900/8">
+        <header className="relative z-10 -mt-10 rounded-3xl bg-white p-6 shadow-sm ring-1 ring-ocean-900/8">
           <p className="text-sm font-medium text-sunset-600">{surfClass.level}</p>
           <h1 className="font-display mt-1 text-3xl text-ocean-900 sm:text-4xl">
             {surfClass.name}

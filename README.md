@@ -13,12 +13,12 @@ cp .env.example .env.local   # puis renseigner les clés Stripe de test
 npm run dev
 ```
 
-http://localhost:3000
+http://localhost:3002
 
 ## Webhook Stripe en local
 
 ```bash
-stripe listen --forward-to localhost:3000/api/webhooks/stripe
+stripe listen --forward-to localhost:3002/api/webhooks/stripe
 ```
 
 Reporter la valeur `whsec_…` affichée dans `STRIPE_WEBHOOK_SECRET`.

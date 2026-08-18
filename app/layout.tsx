@@ -9,7 +9,7 @@ const body = Inter({ variable: "--font-body", subsets: ["latin"], display: "swap
 const display = Fraunces({ variable: "--font-display", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3002"),
   title: {
     default: `${site.name} — Cours de surf à Khao Lak`,
     template: `%s — ${site.name}`,
