@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { site } from "@/lib/site";
+import Logo from "./Logo";
 import Wave from "./Wave";
 
 export default function Footer() {
@@ -8,7 +9,7 @@ export default function Footer() {
       <Wave fill="var(--color-sand-50)" position="top" />
 
       <div className="relative mx-auto max-w-5xl">
-        <p className="font-display mt-5.5 text-[19px] font-bold tracking-[-0.01em]">{site.name}</p>
+        <Logo tone="onDark" markSize={40} className="mt-5.5" />
         <nav className="mt-4 flex flex-wrap gap-x-5.5 gap-y-2.5 text-sm">
           <Link href="/conditions" className="text-cream/82 hover:text-cream">
             Conditions de vente
