@@ -87,7 +87,7 @@ export async function POST(request: Request) {
         notes,
       },
       success_url: `${siteUrl()}/reservation/succes?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl()}/cours/${surfClass.slug}?annule=1`,
+      cancel_url: `${siteUrl()}/reservation/annulee?cours=${surfClass.slug}`,
     });
 
     if (!session.url) throw new Error("Stripe n'a pas renvoyé d'URL de paiement");

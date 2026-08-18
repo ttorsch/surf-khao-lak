@@ -42,7 +42,7 @@ export default function PlaceholderImage({
     <div
       role="img"
       aria-label={alt}
-      className={`absolute inset-0 flex items-center justify-center bg-gradient-to-br from-ocean-300 via-ocean-500 to-ocean-800 ${className}`}
+      className={`absolute inset-0 flex items-start justify-center bg-gradient-to-br from-ocean-300 via-ocean-500 to-ocean-800 pt-4 ${className}`}
     >
       <span className="rounded-full bg-black/55 px-3 py-1.5 text-center text-[11px] font-semibold tracking-wide text-white uppercase">
         Photo à fournir — {label}
