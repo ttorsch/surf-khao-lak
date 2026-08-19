@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { site } from "@/lib/site";
+import SiteHeader from "@/components/SiteHeader";
 
 export const metadata: Metadata = { title: "Mentions légales" };
 
@@ -9,7 +10,9 @@ export const metadata: Metadata = { title: "Mentions légales" };
  */
 export default function LegalPage() {
   return (
-    <main className="mx-auto max-w-2xl px-5 py-12">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-2xl px-5 pt-6 pb-12">
       <h1 className="font-display text-3xl text-navy">Mentions légales</h1>
 
       <div className="mt-8 space-y-8 text-navy/85">
@@ -74,5 +77,6 @@ export default function LegalPage() {
         </section>
       </div>
     </main>
+    </>
   );
 }

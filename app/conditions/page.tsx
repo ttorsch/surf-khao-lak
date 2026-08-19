@@ -3,6 +3,7 @@ import Link from "next/link";
 import { classes } from "@/lib/classes";
 import { formatPrice, priceSuffix } from "@/lib/format";
 import { site } from "@/lib/site";
+import SiteHeader from "@/components/SiteHeader";
 
 export const metadata: Metadata = { title: "Conditions générales de vente" };
 
@@ -22,7 +23,9 @@ function AConfirmer() {
  */
 export default function TermsPage() {
   return (
-    <main className="mx-auto max-w-2xl px-5 py-12">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-2xl px-5 pt-6 pb-12">
       <h1 className="font-display text-3xl text-navy">Conditions générales de vente</h1>
 
       <div className="mt-8 space-y-8 text-navy/85">
@@ -116,5 +119,6 @@ export default function TermsPage() {
         </section>
       </div>
     </main>
+    </>
   );
 }

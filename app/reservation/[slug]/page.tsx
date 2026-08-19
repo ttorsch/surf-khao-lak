@@ -5,6 +5,7 @@ import { ArrowLeft } from "lucide-react";
 import { classes, getClass, totalMinutes } from "@/lib/classes";
 import { formatDuration } from "@/lib/format";
 import BookingForm from "@/components/BookingForm";
+import SiteHeader from "@/components/SiteHeader";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -26,7 +27,9 @@ export default async function BookingPage({ params }: Params) {
   if (!surfClass) notFound();
 
   return (
-    <main className="mx-auto max-w-xl px-5 py-8">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-xl px-5 pb-8">
       <Link
         href={`/cours/${surfClass.slug}`}
         className="inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-navy"
@@ -44,5 +47,6 @@ export default async function BookingPage({ params }: Params) {
         <BookingForm surfClass={surfClass} />
       </div>
     </main>
+    </>
   );
 }

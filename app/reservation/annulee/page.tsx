@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getClass } from "@/lib/classes";
 import { whatsappUrl } from "@/lib/site";
 import CtaButton from "@/components/CtaButton";
+import SiteHeader from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Paiement interrompu",
@@ -17,7 +18,9 @@ export default async function CancelledPage({ searchParams }: Props) {
   const surfClass = cours ? getClass(cours) : undefined;
 
   return (
-    <main className="mx-auto max-w-xl px-5 py-16 text-center">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-xl px-5 pt-6 pb-16 text-center">
       <h1 className="font-display text-3xl text-navy">Paiement interrompu</h1>
       <p className="mt-3 text-navy/80">
         Aucun montant n&apos;a été débité. Votre place n&apos;est pas réservée, mais vous pouvez
@@ -50,5 +53,6 @@ export default async function CancelledPage({ searchParams }: Props) {
         Revenir à l&apos;accueil
       </Link>
     </main>
+    </>
   );
 }

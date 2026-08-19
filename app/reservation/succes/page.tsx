@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2 } from "lucide-react";
 import { site, whatsappUrl } from "@/lib/site";
+import SiteHeader from "@/components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Réservation confirmée",
@@ -10,7 +11,9 @@ export const metadata: Metadata = {
 
 export default function SuccessPage() {
   return (
-    <main className="mx-auto max-w-xl px-5 py-16 text-center">
+    <>
+      <SiteHeader />
+      <main className="mx-auto max-w-xl px-5 pt-6 pb-16 text-center">
       <CheckCircle2 className="mx-auto size-14 text-orange" aria-hidden />
       <h1 className="font-display mt-5 text-3xl text-navy">C&apos;est réservé !</h1>
       <p className="mt-3 text-navy/80">
@@ -50,5 +53,6 @@ export default function SuccessPage() {
         Revenir à l&apos;accueil
       </Link>
     </main>
+    </>
   );
 }

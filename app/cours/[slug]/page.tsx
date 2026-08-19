@@ -5,8 +5,9 @@ import { AlertCircle, ArrowLeft, CalendarClock, Timer, Users } from "lucide-reac
 import { classes, getClass, totalMinutes } from "@/lib/classes";
 import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
-import { whatsappUrl } from "@/lib/site";
+import { site, whatsappUrl } from "@/lib/site";
 import CtaButton from "@/components/CtaButton";
+import { LogoMark } from "@/components/Logo";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import StickyCta from "@/components/StickyCta";
 
@@ -60,6 +61,13 @@ export default async function ClassPage({ params }: Params) {
         >
           <ArrowLeft className="size-4" aria-hidden />
           Tous les cours
+        </Link>
+        <Link
+          href="/"
+          aria-label={`${site.name} — retour à l'accueil`}
+          className="absolute top-4 right-4 z-10 flex size-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm"
+        >
+          <LogoMark size={24} tone="onDark" />
         </Link>
       </div>
 
