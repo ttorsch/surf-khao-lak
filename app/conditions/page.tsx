@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { classes } from "@/lib/classes";
+import { classes, FRENCH_SUPPLEMENT_THB } from "@/lib/classes";
 import { formatPrice, priceSuffix } from "@/lib/format";
 import { site } from "@/lib/site";
 import SiteHeader from "@/components/SiteHeader";
@@ -53,6 +53,11 @@ export default function TermsPage() {
               </li>
             ))}
           </ul>
+          <p className="mt-3">
+            Un cours dispensé en français fait l&apos;objet d&apos;un supplément de{" "}
+            {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation, quel que soit le nombre de
+            participants. Cette option est choisie par le client au moment de la réservation.
+          </p>
         </section>
 
         <section>

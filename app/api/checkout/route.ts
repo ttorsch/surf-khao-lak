@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { billableQuantity, getClass } from "@/lib/classes";
+import { billableQuantity, FRENCH_SUPPLEMENT_THB, getClass } from "@/lib/classes";
 import { toStripeAmount } from "@/lib/format";
 import { getStripe, siteUrl } from "@/lib/stripe";
 
@@ -9,6 +9,7 @@ type Payload = {
   slug?: unknown;
   date?: unknown;
   participants?: unknown;
+  french?: unknown;
   level?: unknown;
   name?: unknown;
   email?: unknown;
@@ -39,6 +40,8 @@ export async function POST(request: Request) {
   const date = typeof body.date === "string" ? body.date : "";
   const level = typeof body.level === "string" ? body.level.trim() : "";
   const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 400) : "";
+  // Le client n'envoie qu'un booléen : le montant du supplément reste serveur.
+  const french = body.french === true;
   const participants = Number(body.participants);
 
   if (name.length < 2) {
@@ -86,6 +89,22 @@ export async function POST(request: Request) {
             },
           },
         },
+        // Supplément langue : forfaitaire, une seule fois par réservation.
+        ...(french
+          ? [
+              {
+                quantity: 1,
+                price_data: {
+                  currency: "thb",
+                  unit_amount: toStripeAmount(FRENCH_SUPPLEMENT_THB),
+                  product_data: {
+                    name: "Cours en français",
+                    description: "Supplément par réservation",
+                  },
+                },
+              },
+            ]
+          : []),
       ],
       // Ce qui transforme un paiement en réservation exploitable.
       metadata: {
@@ -93,6 +112,7 @@ export async function POST(request: Request) {
         className: surfClass.name,
         date,
         participants: String(participants),
+        french: french ? "oui" : "non",
         level,
         customerName: name,
         notes,

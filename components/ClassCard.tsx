@@ -1,5 +1,5 @@
 import { Timer, Users } from "lucide-react";
-import { totalMinutes, type SurfClass } from "@/lib/classes";
+import { FRENCH_SUPPLEMENT_THB, totalMinutes, type SurfClass } from "@/lib/classes";
 import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
 import CtaButton from "./CtaButton";
@@ -39,12 +39,19 @@ export default function ClassCard({ surfClass }: { surfClass: SurfClass }) {
           </div>
         </dl>
 
-        <p className="flex flex-wrap items-baseline gap-x-1.5 pt-4 pb-4.5">
-          <span className="font-display text-[32px] tracking-[-0.02em] tabular-nums text-blue">
-            {formatPrice(surfClass.priceThb)}
-          </span>
-          <span className="text-[13px] whitespace-nowrap text-navy/60">{priceSuffix(surfClass)}</span>
-        </p>
+        <div className="pt-4 pb-4.5">
+          <p className="flex flex-wrap items-baseline gap-x-1.5">
+            <span className="font-display text-[32px] tracking-[-0.02em] tabular-nums text-blue">
+              {formatPrice(surfClass.priceThb)}
+            </span>
+            <span className="text-[13px] whitespace-nowrap text-navy/60">
+              {priceSuffix(surfClass)}
+            </span>
+          </p>
+          <p className="mt-1 text-[13px] text-navy/60">
+            Cours en français : + {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation
+          </p>
+        </div>
 
         <div className="flex flex-col gap-2.5">
           <CtaButton href={`/reservation/${surfClass.slug}`}>Réserver</CtaButton>

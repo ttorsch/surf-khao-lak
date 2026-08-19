@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertCircle, ArrowLeft, CalendarClock, Timer, Users } from "lucide-react";
-import { classes, getClass, totalMinutes } from "@/lib/classes";
+import { classes, FRENCH_SUPPLEMENT_THB, getClass, totalMinutes } from "@/lib/classes";
 import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
 import { site, whatsappUrl } from "@/lib/site";
@@ -94,6 +94,9 @@ export default async function ClassPage({ params }: Params) {
             <span className="ml-1.5 text-base font-normal whitespace-nowrap text-navy/60">
               {priceSuffix(surfClass)}
             </span>
+          </p>
+          <p className="mt-1.5 text-sm text-navy/70">
+            Cours en français : + {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation
           </p>
 
           <CtaButton href={`/reservation/${surfClass.slug}`} className="mt-5 w-full">

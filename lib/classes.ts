@@ -151,6 +151,13 @@ export const classes: SurfClass[] = [
   },
 ];
 
+/**
+ * Supplément pour un cours dispensé en français, en bahts.
+ * Forfaitaire : facturé une fois par réservation, quel que soit le nombre
+ * de participants. Ajouté au paiement uniquement si le client coche l'option.
+ */
+export const FRENCH_SUPPLEMENT_THB = 200;
+
 export const getClass = (slug: string): SurfClass | undefined =>
   classes.find((c) => c.slug === slug);
 
