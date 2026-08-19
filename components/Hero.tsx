@@ -65,13 +65,14 @@ export default function Hero() {
         <div className="mt-auto pt-24">
           <p className="mb-3.5 inline-flex items-center gap-1.5 rounded-full border border-cream/40 bg-cream/15 py-1.5 pr-3 pl-2.5 text-xs text-cream">
             <MapPin className="size-3.5" aria-hidden />
-            {site.beach}, {site.city}
+            {site.city}, {site.country}
           </p>
           <h1 className="font-display text-[40px] leading-[1.02] tracking-[-0.03em] text-cream text-pretty sm:text-6xl">
             Apprenez à surfer à {site.city}
           </h1>
           <p className="mt-3 max-w-[330px] text-[15px] leading-[1.55] text-cream/90 text-pretty">
-            Cours tous niveaux à {site.beach} avec matériel inclus
+            Cours tous niveaux au paradis du surf à {site.beach}. Matériel et équipement
+            inclus
           </p>
           <div className="mt-6 flex gap-2.5">
             <CtaButton href="#cours" size="sm" className="flex-1 sm:flex-none">
