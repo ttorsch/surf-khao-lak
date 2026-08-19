@@ -7,7 +7,7 @@ import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/for
 import { classPhotos } from "@/lib/photos";
 import { site, whatsappUrl } from "@/lib/site";
 import CtaButton from "@/components/CtaButton";
-import { LogoMark } from "@/components/Logo";
+import { LogoBadge } from "@/components/Logo";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import StickyCta from "@/components/StickyCta";
 
@@ -65,9 +65,9 @@ export default async function ClassPage({ params }: Params) {
         <Link
           href="/"
           aria-label={`${site.name} — retour à l'accueil`}
-          className="absolute top-4 right-4 z-10 flex size-11 items-center justify-center rounded-full bg-black/40 backdrop-blur-sm"
+          className="absolute top-4 right-4 z-10 flex"
         >
-          <LogoMark size={24} tone="onDark" />
+          <LogoBadge size={44} />
         </Link>
       </div>
 

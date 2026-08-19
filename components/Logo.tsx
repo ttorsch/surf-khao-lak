@@ -86,26 +86,28 @@ export function LogoBadge({ size = 40, className = "" }: { size?: number; classN
   );
 }
 
-/** Lockup horizontal : marque + nom. */
+/** Lockup horizontal : nom à gauche, marque à droite. */
 export default function Logo({
   tone = "onLight",
   variant = "mark",
   markSize = 40,
+  spread = false,
   className = "",
 }: {
   tone?: Tone;
   /** « badge » = pastille pleine, à préférer sur une photo */
   variant?: "mark" | "badge";
   markSize?: number;
+  /** Occupe toute la largeur : nom collé à gauche, marque collée à droite */
+  spread?: boolean;
   className?: string;
 }) {
   return (
-    <span className={`inline-flex items-center gap-3 ${className}`}>
-      {variant === "badge" ? (
-        <LogoBadge size={markSize} />
-      ) : (
-        <LogoMark size={markSize} tone={tone} />
-      )}
+    <span
+      className={`${
+        spread ? "flex w-full justify-between" : "inline-flex"
+      } items-center gap-3 ${className}`}
+    >
       <span
         className={`font-display text-xl leading-[1.05] font-bold tracking-[-0.02em] ${
           tone === "onDark" ? "text-cream" : "text-navy"
@@ -113,6 +115,11 @@ export default function Logo({
       >
         {site.name}
       </span>
+      {variant === "badge" ? (
+        <LogoBadge size={markSize} />
+      ) : (
+        <LogoMark size={markSize} tone={tone} />
+      )}
     </span>
   );
 }

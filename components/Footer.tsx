@@ -9,7 +9,7 @@ export default function Footer() {
       <Wave fill="var(--color-sand-50)" position="top" />
 
       <div className="relative mx-auto max-w-5xl">
-        <Logo tone="onDark" markSize={40} className="mt-5.5" />
+        <Logo tone="onDark" variant="badge" markSize={40} className="mt-5.5" />
         <nav className="mt-4 flex flex-wrap gap-x-5.5 gap-y-2.5 text-sm">
           <Link href="/conditions" className="text-cream/82 hover:text-cream">
             Conditions de vente

@@ -57,7 +57,7 @@ export default function Hero() {
 
       <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col px-5.5 pt-5 pb-16">
         <div className="flex items-center">
-          <Logo tone="onLight" markSize={40} />
+          <Logo tone="onLight" variant="badge" markSize={40} spread />
         </div>
 
         <div className="mt-auto pt-24">

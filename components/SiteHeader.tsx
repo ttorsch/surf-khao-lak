@@ -13,9 +13,9 @@ export default function SiteHeader({ className = "" }: { className?: string }) {
       <Link
         href="/"
         aria-label={`${site.name} — retour à l'accueil`}
-        className="inline-flex rounded-full"
+        className="flex rounded-full"
       >
-        <Logo markSize={34} />
+        <Logo variant="badge" markSize={36} spread />
       </Link>
     </header>
   );
