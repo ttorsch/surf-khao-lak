@@ -38,7 +38,7 @@ function HeroPhoto() {
         {...mobile}
         alt={common.alt}
         /* Le cadrage suit la source : chaque photo a son propre point d'ancrage. */
-        className="absolute inset-0 size-full object-cover object-[45%_42%] sm:object-[55%_50%]"
+        className="absolute inset-0 size-full object-cover object-[35%_50%] sm:object-[50%_30%]"
       />
     </picture>
   );
@@ -52,8 +52,10 @@ export default function Hero() {
   return (
     <section className="relative flex min-h-[80svh] flex-col">
       <HeroPhoto />
-      {/* Voile dégradé bleu nuit : lisibilité du texte, photo préservée en haut. */}
-      <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/45 to-navy/10" />
+
+      {/* Assombrissement neutre, sans teinte : les couleurs de la photo restent
+          fidèles, mais le texte garde son contraste sur l'écume blanche. */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent" />
 
       <div className="relative mx-auto flex w-full max-w-3xl flex-1 flex-col px-5.5 pt-5 pb-16">
         <div className="flex items-center">
@@ -66,17 +68,16 @@ export default function Hero() {
             {site.beach}, {site.city}
           </p>
           <h1 className="font-display text-[40px] leading-[1.02] tracking-[-0.03em] text-cream text-pretty sm:text-6xl">
-            Debout sur votre première vague dès aujourd&apos;hui
+            Apprenez à surfer à {site.city}
           </h1>
           <p className="mt-3 max-w-[330px] text-[15px] leading-[1.55] text-cream/90 text-pretty">
-            Cours de surf en français à Khao Lak. Petits groupes, moniteurs dans l&apos;eau avec
-            vous, planche et lycra fournis.
+            Cours tous niveaux à {site.beach} avec matériel inclus
           </p>
-          <div className="mt-6 flex flex-col gap-2.5 sm:flex-row">
-            <CtaButton href="#cours" className="w-full sm:w-auto">
+          <div className="mt-6 flex gap-2.5">
+            <CtaButton href="#cours" size="sm" className="flex-1 sm:flex-none">
               Voir les cours
             </CtaButton>
-            <CtaButton href="#contact" variant="ghost" className="w-full sm:w-auto">
+            <CtaButton href="#contact" variant="ghost" size="sm" className="flex-1 sm:flex-none">
               Poser une question
             </CtaButton>
           </div>

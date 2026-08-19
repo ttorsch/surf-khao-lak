@@ -14,8 +14,7 @@ export const metadata: Metadata = {
     default: `${site.name} — Cours de surf à Khao Lak`,
     template: `%s — ${site.name}`,
   },
-  description:
-    "Apprenez à surfer à Khao Lak avec des moniteurs francophones. Cours découverte, cours privés et stages, planche et lycra fournis. Réservation en ligne.",
+  description: `Apprenez à surfer à ${site.city}. Cours collectif, particulier, duo ou famille à ${site.beach}, matériel inclus. Réservation en ligne.`,
   openGraph: {
     type: "website",
     locale: "fr_FR",
