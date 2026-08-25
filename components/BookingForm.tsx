@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { FRENCH_SUPPLEMENT_THB, type SurfClass } from "@/lib/classes";
+import type { SurfClass } from "@/lib/classes";
 import { formatPrice } from "@/lib/format";
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -17,6 +17,7 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
 
   const [participants, setParticipants] = useState(min);
   const [french, setFrench] = useState(false);
+  const supplement = surfClass.frenchSupplementThb;
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,7 +25,7 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
   const base =
     surfClass.priceUnit === "personne" ? surfClass.priceThb * participants : surfClass.priceThb;
   /** Le supplément langue est forfaitaire : une fois par réservation. */
-  const total = base + (french ? FRENCH_SUPPLEMENT_THB : 0);
+  const total = base + (french && supplement !== null ? supplement : 0);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -140,21 +141,23 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
         />
       </div>
 
-      <label className="flex cursor-pointer items-start gap-3 rounded-soft border border-line-strong bg-surface p-4">
-        <input
-          type="checkbox"
-          checked={french}
-          onChange={(e) => setFrench(e.target.checked)}
-          className="mt-0.5 size-5 shrink-0 accent-orange"
-        />
-        <span>
-          <span className="block font-semibold text-navy">Je souhaite un cours en français</span>
-          <span className="block text-[13px] text-navy/65">
-            Supplément de {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation, quel que soit le
-            nombre de participants.
+      {supplement !== null && (
+        <label className="flex cursor-pointer items-start gap-3 rounded-soft border border-line-strong bg-surface p-4">
+          <input
+            type="checkbox"
+            checked={french}
+            onChange={(e) => setFrench(e.target.checked)}
+            className="mt-0.5 size-5 shrink-0 accent-orange"
+          />
+          <span>
+            <span className="block font-semibold text-navy">Je souhaite un cours en français</span>
+            <span className="block text-[13px] text-navy/65">
+              Supplément de {formatPrice(supplement)} par réservation, quel que soit le nombre de
+              participants.
+            </span>
           </span>
-        </span>
-      </label>
+        </label>
+      )}
 
       <div className="space-y-1.5 rounded-soft bg-sand-100 p-4">
         <p className="flex items-baseline justify-between gap-3 text-navy">
@@ -164,10 +167,10 @@ export default function BookingForm({ surfClass }: { surfClass: SurfClass }) {
           </span>
           <span className="tabular-nums">{formatPrice(base)}</span>
         </p>
-        {french && (
+        {french && supplement !== null && (
           <p className="flex items-baseline justify-between gap-3 text-sm text-navy/70">
             <span>Cours en français</span>
-            <span className="tabular-nums">+ {formatPrice(FRENCH_SUPPLEMENT_THB)}</span>
+            <span className="tabular-nums">+ {formatPrice(supplement)}</span>
           </p>
         )}
         <p className="flex items-baseline justify-between gap-3 border-t border-line pt-2 text-navy">

@@ -18,9 +18,10 @@ export const site = {
   // Secteur confirmé par OpenStreetMap (หาดแหลมปะการัง, Khuk Khak, Takua Pa).
   // TODO — adresse précise du point de rendez-vous (bar / surf house).
   address: "Pakarang Beach, Khuk Khak, Takua Pa, Phang Nga",
-  // Repère sur la pointe de Pakarang. TODO — remplacer par le point GPS exact
-  // du rendez-vous dès que l'école le communique.
-  map: { lat: 8.729, lng: 98.2223, zoom: 15 },
+  // Recherche Google Maps du point de rendez-vous.
+  // TODO — si l'établissement a une fiche Google, préférer son lien direct :
+  // il pointe la fiche exacte plutôt qu'un résultat de recherche.
+  mapsQuery: "Memories Surfhouse Khao Lak",
   contact: {
     phone: "+66 63 737 4599",
     whatsapp: "66637374599", // format international sans « + » pour wa.me
@@ -36,6 +37,10 @@ export const site = {
     host: "Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA",
   },
 } as const;
+
+/** Lien Google Maps du point de rendez-vous (ouvre l'app sur mobile). */
+export const mapsUrl = () =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.mapsQuery)}`;
 
 /** Message pré-rempli de tous les boutons WhatsApp du site. */
 export const WHATSAPP_MESSAGE =

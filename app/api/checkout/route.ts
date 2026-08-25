@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { billableQuantity, FRENCH_SUPPLEMENT_THB, getClass } from "@/lib/classes";
+import { billableQuantity, getClass } from "@/lib/classes";
 import { toStripeAmount } from "@/lib/format";
 import { getStripe, siteUrl } from "@/lib/stripe";
 
@@ -40,8 +40,10 @@ export async function POST(request: Request) {
   const date = typeof body.date === "string" ? body.date : "";
   const level = typeof body.level === "string" ? body.level.trim() : "";
   const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 400) : "";
-  // Le client n'envoie qu'un booléen : le montant du supplément reste serveur.
-  const french = body.french === true;
+  // Le client n'envoie qu'un booléen ; le montant vient du catalogue, et un
+  // cours qui ne propose pas l'option ne peut pas être facturé pour elle.
+  const supplement = surfClass.frenchSupplementThb;
+  const french = body.french === true && supplement !== null;
   const participants = Number(body.participants);
 
   if (name.length < 2) {
@@ -90,13 +92,13 @@ export async function POST(request: Request) {
           },
         },
         // Supplément langue : forfaitaire, une seule fois par réservation.
-        ...(french
+        ...(french && supplement !== null
           ? [
               {
                 quantity: 1,
                 price_data: {
                   currency: "thb",
-                  unit_amount: toStripeAmount(FRENCH_SUPPLEMENT_THB),
+                  unit_amount: toStripeAmount(supplement),
                   product_data: {
                     name: "Cours en français",
                     description: "Supplément par réservation",

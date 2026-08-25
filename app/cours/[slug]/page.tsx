@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { AlertCircle, ArrowLeft, CalendarClock, Timer, Users } from "lucide-react";
-import { classes, FRENCH_SUPPLEMENT_THB, getClass, totalMinutes } from "@/lib/classes";
-import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/format";
+import { classes, getClass, totalMinutes } from "@/lib/classes";
+import { formatDuration, formatGroup, formatPrice } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
 import { site, whatsappUrl } from "@/lib/site";
 import CtaButton from "@/components/CtaButton";
@@ -91,13 +91,12 @@ export default async function ClassPage({ params }: Params) {
 
           <p className="font-display mt-5 text-3xl text-navy">
             {formatPrice(surfClass.priceThb)}
-            <span className="ml-1.5 text-base font-normal whitespace-nowrap text-navy/60">
-              {priceSuffix(surfClass)}
-            </span>
           </p>
-          <p className="mt-1.5 text-sm text-navy/70">
-            Cours en français : + {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation
-          </p>
+          {surfClass.frenchSupplementThb !== null && (
+            <p className="mt-1.5 text-sm text-navy/70">
+              Cours en français : + {formatPrice(surfClass.frenchSupplementThb)} par réservation
+            </p>
+          )}
 
           <CtaButton href={`/reservation/${surfClass.slug}`} className="mt-5 w-full">
             Réserver

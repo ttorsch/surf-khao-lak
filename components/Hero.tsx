@@ -2,7 +2,7 @@ import { getImageProps } from "next/image";
 import { MapPin } from "lucide-react";
 import heroDesktop from "@/public/hero-surf-desktop.jpg";
 import heroMobile from "@/public/hero-surf.jpg";
-import { site } from "@/lib/site";
+import { site, whatsappUrl } from "@/lib/site";
 import CtaButton from "./CtaButton";
 import Logo from "./Logo";
 import Wave from "./Wave";
@@ -78,7 +78,13 @@ export default function Hero() {
             <CtaButton href="#cours" size="sm" className="flex-1 sm:flex-none">
               Voir les cours
             </CtaButton>
-            <CtaButton href="#contact" variant="ghost" size="sm" className="flex-1 sm:flex-none">
+            <CtaButton
+              href={whatsappUrl()}
+              external
+              variant="ghost"
+              size="sm"
+              className="flex-1 sm:flex-none"
+            >
               Poser une question
             </CtaButton>
           </div>

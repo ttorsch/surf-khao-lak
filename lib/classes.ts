@@ -34,6 +34,8 @@ export type SurfClass = {
   ageMin: number;
   ageMax: number;
   experience: string;
+  /** Supplément pour un cours en français, en bahts. `null` = non proposé. */
+  frenchSupplementThb: number | null;
   /** Disponibilité particulière, quand l'école en impose une */
   schedule: string | null;
   conditions: {
@@ -76,6 +78,8 @@ export const classes: SurfClass[] = [
     ageMin: 12,
     ageMax: 50,
     experience: "Réservé aux personnes n'ayant jamais surfé.",
+    // Le cours collectif ne propose pas l'option française.
+    frenchSupplementThb: null,
     schedule:
       "Une seule session par jour. L'horaire dépend des marées et vous est confirmé à l'avance.",
     conditions: { ...conditionsAConfirmer },
@@ -100,6 +104,8 @@ export const classes: SurfClass[] = [
     ageMin: 6,
     ageMax: 60,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
+    frenchSupplementThb: 200,
     schedule: null,
     conditions: { ...conditionsAConfirmer },
   },
@@ -123,6 +129,8 @@ export const classes: SurfClass[] = [
     ageMin: 12,
     ageMax: 50,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
+    frenchSupplementThb: 300,
     schedule: null,
     conditions: { ...conditionsAConfirmer },
   },
@@ -146,17 +154,12 @@ export const classes: SurfClass[] = [
     ageMin: 12,
     ageMax: 50,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
+    frenchSupplementThb: 400,
     schedule: null,
     conditions: { ...conditionsAConfirmer },
   },
 ];
-
-/**
- * Supplément pour un cours dispensé en français, en bahts.
- * Forfaitaire : facturé une fois par réservation, quel que soit le nombre
- * de participants. Ajouté au paiement uniquement si le client coche l'option.
- */
-export const FRENCH_SUPPLEMENT_THB = 200;
 
 export const getClass = (slug: string): SurfClass | undefined =>
   classes.find((c) => c.slug === slug);

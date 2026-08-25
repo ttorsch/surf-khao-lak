@@ -40,12 +40,22 @@ export default function StickyCta({
             {price && (
               <p className="font-display text-lg tabular-nums whitespace-nowrap text-blue">{price}</p>
             )}
-            <Link
-              href={href}
-              className="flex h-[50px] flex-1 items-center justify-center rounded-full bg-orange px-6 text-[15px] font-semibold text-cream shadow-orange transition-colors hover:bg-orange-dark"
-            >
-              {label}
-            </Link>
+            {/* Même raison que dans CtaButton : une ancre doit rester un <a>. */}
+            {href.startsWith("#") ? (
+              <a
+                href={href}
+                className="flex h-[50px] flex-1 items-center justify-center rounded-full bg-orange px-6 text-[15px] font-semibold text-cream shadow-orange transition-colors hover:bg-orange-dark"
+              >
+                {label}
+              </a>
+            ) : (
+              <Link
+                href={href}
+                className="flex h-[50px] flex-1 items-center justify-center rounded-full bg-orange px-6 text-[15px] font-semibold text-cream shadow-orange transition-colors hover:bg-orange-dark"
+              >
+                {label}
+              </Link>
+            )}
           </div>
         </motion.div>
       )}

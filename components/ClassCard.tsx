@@ -1,6 +1,6 @@
 import { Timer, Users } from "lucide-react";
-import { FRENCH_SUPPLEMENT_THB, totalMinutes, type SurfClass } from "@/lib/classes";
-import { formatDuration, formatGroup, formatPrice, priceSuffix } from "@/lib/format";
+import { totalMinutes, type SurfClass } from "@/lib/classes";
+import { formatDuration, formatGroup, formatPrice } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
 import CtaButton from "./CtaButton";
 import PlaceholderImage from "./PlaceholderImage";
@@ -40,17 +40,14 @@ export default function ClassCard({ surfClass }: { surfClass: SurfClass }) {
         </dl>
 
         <div className="pt-4 pb-4.5">
-          <p className="flex flex-wrap items-baseline gap-x-1.5">
-            <span className="font-display text-[32px] tracking-[-0.02em] tabular-nums text-blue">
-              {formatPrice(surfClass.priceThb)}
-            </span>
-            <span className="text-[13px] whitespace-nowrap text-navy/60">
-              {priceSuffix(surfClass)}
-            </span>
+          <p className="font-display text-[32px] tracking-[-0.02em] tabular-nums text-blue">
+            {formatPrice(surfClass.priceThb)}
           </p>
-          <p className="mt-1 text-[13px] text-navy/60">
-            Cours en français : + {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation
-          </p>
+          {surfClass.frenchSupplementThb !== null && (
+            <p className="mt-1 text-[13px] text-navy/60">
+              Cours en français : + {formatPrice(surfClass.frenchSupplementThb)} par réservation
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-2.5">

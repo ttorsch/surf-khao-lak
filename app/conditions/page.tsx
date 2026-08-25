@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { classes, FRENCH_SUPPLEMENT_THB } from "@/lib/classes";
+import { classes } from "@/lib/classes";
 import { formatPrice, priceSuffix } from "@/lib/format";
 import { site } from "@/lib/site";
 import SiteHeader from "@/components/SiteHeader";
@@ -54,10 +54,21 @@ export default function TermsPage() {
             ))}
           </ul>
           <p className="mt-3">
-            Un cours dispensé en français fait l&apos;objet d&apos;un supplément de{" "}
-            {formatPrice(FRENCH_SUPPLEMENT_THB)} par réservation, quel que soit le nombre de
-            participants. Cette option est choisie par le client au moment de la réservation.
+            Les formules suivantes proposent, en option, un cours dispensé en français, facturé
+            une fois par réservation quel que soit le nombre de participants :
           </p>
+          <ul className="mt-2 space-y-1.5">
+            {classes
+              .filter((c) => c.frenchSupplementThb !== null)
+              .map((c) => (
+                <li key={c.slug} className="flex justify-between gap-4">
+                  <span>{c.name}</span>
+                  <span className="font-medium whitespace-nowrap">
+                    + {formatPrice(c.frenchSupplementThb!)}
+                  </span>
+                </li>
+              ))}
+          </ul>
         </section>
 
         <section>

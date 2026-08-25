@@ -25,19 +25,39 @@ export default function CtaButton({
   children,
   variant = "primary",
   size = "md",
+  external = false,
   className = "",
 }: {
   href: string;
   children: ReactNode;
   variant?: keyof typeof styles;
   size?: keyof typeof sizes;
+  /** Lien sortant (WhatsApp, tél.) : ouvre hors du site, pas de préchargement */
+  external?: boolean;
   className?: string;
 }) {
+  const classes = `inline-flex h-[50px] items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap transition-colors ${sizes[size]} ${styles[variant]} ${className}`;
+
+  if (external) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" className={classes}>
+        {children}
+      </a>
+    );
+  }
+
+  // Ancre sur la même page : <Link> met à jour le hash sans faire défiler.
+  // Le <a> natif, lui, atteint bien la section.
+  if (href.startsWith("#")) {
+    return (
+      <a href={href} className={classes}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link
-      href={href}
-      className={`inline-flex h-[50px] items-center justify-center gap-2 rounded-full font-semibold whitespace-nowrap transition-colors ${sizes[size]} ${styles[variant]} ${className}`}
-    >
+    <Link href={href} className={classes}>
       {children}
     </Link>
   );
