@@ -1,12 +1,9 @@
 import Link from "next/link";
 import CtaButton from "@/components/CtaButton";
-import SiteHeader from "@/components/SiteHeader";
 
 export default function NotFound() {
   return (
-    <>
-      <SiteHeader />
-      <main className="mx-auto flex max-w-lg flex-col items-center px-5 pt-6 pb-24 text-center">
+    <main className="mx-auto flex max-w-lg flex-col items-center px-5 py-24 text-center">
       <p className="font-display text-6xl text-blue-soft">404</p>
       <h1 className="font-display mt-3 text-3xl text-navy">Cette page a pris le large</h1>
       <p className="mt-3 text-navy/80">
@@ -19,6 +16,5 @@ export default function NotFound() {
         Revenir à l&apos;accueil
       </Link>
     </main>
-    </>
   );
 }

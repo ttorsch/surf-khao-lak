@@ -1,19 +1,14 @@
 import { classes } from "@/lib/classes";
 import ClassCard from "@/components/ClassCard";
 import ContactBlock from "@/components/ContactBlock";
-import Hero from "@/components/Hero";
 import Localisation from "@/components/Localisation";
 import Reveal from "@/components/Reveal";
-import Slider from "@/components/Slider";
 import StickyCta from "@/components/StickyCta";
 
-/** Une seule page, un seul récit : héros → séduction → cours → lieu → contact. */
+/** Une seule page, un seul récit : cours → lieu → contact. */
 export default function Home() {
   return (
     <main>
-      <Hero />
-      <Slider />
-
       <section id="cours" className="mx-auto max-w-5xl scroll-mt-4 px-5.5 pt-10 pb-2">
         <h2 className="font-display text-[28px] leading-[1.1] text-navy sm:text-4xl">Nos cours</h2>
         <p className="mt-2 max-w-xl text-[15px] leading-[1.55] text-navy/72 text-pretty">

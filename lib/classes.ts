@@ -34,6 +34,12 @@ export type SurfClass = {
   ageMin: number;
   ageMax: number;
   experience: string;
+  /**
+   * `true` = formule fermée aux personnes ayant déjà surfé. Sur les autres, un
+   * participant expérimenté saute la théorie sur le sable et passe la durée
+   * totale dans l'eau.
+   */
+  beginnersOnly: boolean;
   /** Supplément pour un cours en français, en bahts. `null` = non proposé. */
   frenchSupplementThb: number | null;
   /** Disponibilité particulière, quand l'école en impose une */
@@ -72,12 +78,13 @@ export const classes: SurfClass[] = [
     },
     priceThb: 1800,
     priceUnit: "personne",
-    minParticipants: 2,
+    minParticipants: 1,
     maxParticipants: 4,
     ratio: "4 élèves pour 1 moniteur",
     ageMin: 12,
     ageMax: 50,
     experience: "Réservé aux personnes n'ayant jamais surfé.",
+    beginnersOnly: true,
     // Le cours collectif ne propose pas l'option française.
     frenchSupplementThb: null,
     schedule:
@@ -104,6 +111,7 @@ export const classes: SurfClass[] = [
     ageMin: 6,
     ageMax: 60,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    beginnersOnly: false,
     /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
     frenchSupplementThb: 200,
     schedule: null,
@@ -129,6 +137,7 @@ export const classes: SurfClass[] = [
     ageMin: 12,
     ageMax: 50,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    beginnersOnly: false,
     /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
     frenchSupplementThb: 300,
     schedule: null,
@@ -154,6 +163,7 @@ export const classes: SurfClass[] = [
     ageMin: 12,
     ageMax: 50,
     experience: "Ouvert aux débutants comme à celles et ceux qui ont déjà un peu surfé.",
+    beginnersOnly: false,
     /** Forfaitaire : une fois par réservation, quel que soit le nombre de participants. */
     frenchSupplementThb: 400,
     schedule: null,

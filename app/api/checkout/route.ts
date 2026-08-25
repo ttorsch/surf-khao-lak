@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 import { billableQuantity, getClass } from "@/lib/classes";
 import { toStripeAmount } from "@/lib/format";
+import {
+  normalizeParticipant,
+  participantsMetadata,
+  validateParticipant,
+} from "@/lib/participants";
 import { getStripe, siteUrl } from "@/lib/stripe";
 
 export const runtime = "nodejs";
@@ -8,15 +13,10 @@ export const runtime = "nodejs";
 type Payload = {
   slug?: unknown;
   date?: unknown;
-  participants?: unknown;
   french?: unknown;
-  level?: unknown;
-  name?: unknown;
-  email?: unknown;
-  notes?: unknown;
+  people?: unknown;
 };
 
-const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 const isDate = (v: string) => /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v));
 
 export async function POST(request: Request) {
@@ -35,32 +35,28 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Ce cours n'existe pas." }, { status: 400 });
   }
 
-  const name = typeof body.name === "string" ? body.name.trim() : "";
-  const email = typeof body.email === "string" ? body.email.trim() : "";
   const date = typeof body.date === "string" ? body.date : "";
-  const level = typeof body.level === "string" ? body.level.trim() : "";
-  const notes = typeof body.notes === "string" ? body.notes.trim().slice(0, 400) : "";
   // Le client n'envoie qu'un booléen ; le montant vient du catalogue, et un
   // cours qui ne propose pas l'option ne peut pas être facturé pour elle.
   const supplement = surfClass.frenchSupplementThb;
   const french = body.french === true && supplement !== null;
-  const participants = Number(body.participants);
 
-  if (name.length < 2) {
-    return NextResponse.json({ error: "Merci d'indiquer votre nom." }, { status: 400 });
-  }
-  if (!isEmail(email)) {
-    return NextResponse.json({ error: "Adresse e-mail invalide." }, { status: 400 });
-  }
   if (!isDate(date)) {
     return NextResponse.json({ error: "Merci de choisir une date valide." }, { status: 400 });
   }
+
+  // Une fiche par élève. Le nombre de participants se déduit des fiches
+  // reçues, jamais d'un compteur envoyé à part : les deux ne peuvent pas
+  // diverger.
+  if (!Array.isArray(body.people)) {
+    return NextResponse.json({ error: "Fiches participants manquantes." }, { status: 400 });
+  }
+
+  const people = body.people.map(normalizeParticipant);
+  const participants = people.length;
+
   // Les bornes viennent du catalogue, jamais de la requête.
-  if (
-    !Number.isInteger(participants) ||
-    participants < surfClass.minParticipants ||
-    participants > surfClass.maxParticipants
-  ) {
+  if (participants < surfClass.minParticipants || participants > surfClass.maxParticipants) {
     return NextResponse.json(
       {
         error:
@@ -72,12 +68,21 @@ export async function POST(request: Request) {
     );
   }
 
+  for (const [index, person] of people.entries()) {
+    const problem = validateParticipant(person, index, index === 0);
+    if (problem) return NextResponse.json({ error: problem }, { status: 400 });
+  }
+
+  const lead = people[0];
+
   try {
     const stripe = getStripe();
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       locale: "fr",
-      customer_email: email,
+      // Le participant 1 est le contact. S'il n'a laissé qu'un téléphone,
+      // Stripe demande lui-même l'e-mail du reçu au moment du paiement.
+      ...(lead.email ? { customer_email: lead.email } : {}),
       line_items: [
         {
           // Un tarif « forfait » / « groupe » se vend en un seul exemplaire.
@@ -109,15 +114,16 @@ export async function POST(request: Request) {
           : []),
       ],
       // Ce qui transforme un paiement en réservation exploitable.
+      // Les fiches participants y figurent avec le numéro de passeport
+      // tronqué — le numéro complet ne quitte jamais le navigateur.
       metadata: {
         classSlug: surfClass.slug,
         className: surfClass.name,
         date,
         participants: String(participants),
         french: french ? "oui" : "non",
-        level,
-        customerName: name,
-        notes,
+        customerName: lead.fullName,
+        ...participantsMetadata(people),
       },
       success_url: `${siteUrl()}/reservation/succes?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${siteUrl()}/reservation/annulee?cours=${surfClass.slug}`,

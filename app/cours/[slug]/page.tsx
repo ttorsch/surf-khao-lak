@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { AlertCircle, ArrowLeft, CalendarClock, Timer, Users } from "lucide-react";
+import { AlertCircle, ArrowLeft, CalendarClock, Info, Timer, Users } from "lucide-react";
 import { classes, getClass, totalMinutes } from "@/lib/classes";
 import { formatDuration, formatGroup, formatPrice } from "@/lib/format";
 import { classPhotos } from "@/lib/photos";
-import { site, whatsappUrl } from "@/lib/site";
+import { whatsappUrl } from "@/lib/site";
 import CtaButton from "@/components/CtaButton";
-import { LogoBadge } from "@/components/Logo";
 import PlaceholderImage from "@/components/PlaceholderImage";
 import StickyCta from "@/components/StickyCta";
 
@@ -62,13 +61,6 @@ export default async function ClassPage({ params }: Params) {
           <ArrowLeft className="size-4" aria-hidden />
           Tous les cours
         </Link>
-        <Link
-          href="/"
-          aria-label={`${site.name} — retour à l'accueil`}
-          className="absolute top-4 right-4 z-10 flex"
-        >
-          <LogoBadge size={44} />
-        </Link>
       </div>
 
       <div className="mx-auto max-w-3xl px-5">
@@ -89,7 +81,7 @@ export default async function ClassPage({ params }: Params) {
             </div>
           </dl>
 
-          <p className="font-display mt-5 text-3xl text-navy">
+          <p className="font-display mt-5 text-3xl text-blue">
             {formatPrice(surfClass.priceThb)}
           </p>
           {surfClass.frenchSupplementThb !== null && (
@@ -123,6 +115,19 @@ export default async function ClassPage({ params }: Params) {
               </li>
             ))}
           </ol>
+
+          {/* Formules ouvertes aux surfeurs confirmés : même durée totale,
+              répartie autrement. Les minutes viennent du catalogue. */}
+          {!surfClass.beginnersOnly && (
+            <p className="mt-4 flex gap-3 rounded-soft bg-sand-100 p-5 text-navy/85">
+              <Info className="mt-0.5 size-5 shrink-0 text-blue" aria-hidden />
+              <span>
+                <span className="font-semibold text-navy">Vous avez déjà surfé ?</span> La partie
+                sur le sable ne vous concerne pas : vous passez les{" "}
+                {formatDuration(totalMinutes(surfClass))} dans l&apos;eau.
+              </span>
+            </p>
+          )}
         </section>
 
         {surfClass.schedule && (
